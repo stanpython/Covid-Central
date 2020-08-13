@@ -7,7 +7,7 @@ import './CountryChart.css';
 
 class BarChartDeaths extends Component {
   plot(chart, width, height) {
-    const { data, start, last } = this.props;
+    const { data } = this.props;
     // create scales!
     const xScale = d3.scaleBand()
       .domain(data.map((d) => d.country))
@@ -16,7 +16,7 @@ class BarChartDeaths extends Component {
       .domain([0, d3.max(data, (d) => d.deaths)])
       .range([height, 0]);
     const colorScale = d3.scaleOrdinal(d3.schemeTableau10);
-
+    const tooltip = d3.select('body').append('div').attr('class', 'toolTip');
     const u = chart.selectAll('.bar')
       .data(data);
 
@@ -28,7 +28,14 @@ class BarChartDeaths extends Component {
       .attr('y', (d) => yScale(d.deaths))
       .attr('height', (d) => (height - yScale(d.deaths)))
       .attr('width', (d) => xScale.bandwidth())
-
+      .on('mouseover', (d) => {
+        tooltip
+          .style('left', `${d3.event.pageX - 70}px`)
+          .style('top', `${d3.event.pageY - 90}px`)
+          .style('display', 'inline-block')
+          .html(`${d.country}<br>` + `Active Cases: ${Number(d.active).toLocaleString()}<br>` + `Today's Cases: +${d.todayCases}<br>` + `Today's Deaths: +${d.todayDeaths}`);
+      })
+      .on('mouseout', (d) => { tooltip.style('display', 'none'); })
       // .attr("fill", "#69b3a2")
       .style('fill', (d, i) => colorScale(i));
 
@@ -42,6 +49,7 @@ class BarChartDeaths extends Component {
       .attr('y', (d) => yScale(d.deaths))
       .attr('dy', -6)
       .style('font-size', '14px')
+      .style('color', 'rgb(77, 77, 77)')
       .text((d) => Number(d.deaths).toLocaleString());
 
     const xAxis = d3.axisBottom()

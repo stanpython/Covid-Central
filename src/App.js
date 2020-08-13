@@ -10,6 +10,7 @@ import StateChartRecovered from './charts/StateChart-recovered';
 import "core-js/stable";
 import "regenerator-runtime/runtime";
 
+
 let start = 1;
 let last = 11;
 
@@ -31,6 +32,7 @@ class App extends Component {
     this.state.updateSliceCountry = this.updateSliceCountry
     this.state.updateSliceState = this.updateSliceState
     this.state.topButtons = this.topButtons
+    this.state.changeView = this.changeView
   }
   
 
@@ -70,7 +72,7 @@ class App extends Component {
       const allStatesJson = await allStates.json();
       this.setState({USstates: allStatesJson.slice(stateStart -= 10, stateLast -= 10)})
     }
-    if (direction === 2) {
+    if (direction === 2 && stateLast !== 61) {
       const allStates = await fetch('https://api.covidtracking.com/v1/states/current.json')
       const allStatesJson = await allStates.json();
       this.setState({USstates: allStatesJson.slice(stateStart += 10, stateLast += 10)})
@@ -89,9 +91,11 @@ class App extends Component {
   }
 
   changeView(view) {
-    this.setState({
-      view: 'state',
-    })
+    if (view === "state") { 
+      this.setState({view: 'state'})
+    } else {
+      this.setState({view: 'country'})
+    }
   }
 
 
@@ -101,6 +105,7 @@ class App extends Component {
     if (this.state.view === 'country') {
     return (
       <>
+        <NavBar onClick={this.changeView.bind(this)}/>
         <div className="chart-and-buttons">
           <div className="chart-button-div">
             <a onClick={() => this.topButtons("cases")} className="myButton">Confirmed Cases</a>
@@ -122,6 +127,7 @@ class App extends Component {
     if (this.state.view === 'state') {
       return (
         <>
+          <NavBar onClick={this.changeView.bind(this)}/>
           <div className="chart-and-buttons">
             <div className="chart-button-div">
               <a onClick={() => this.topButtons("cases")} className="myButton">Confirmed Cases</a>
@@ -144,6 +150,34 @@ class App extends Component {
 
 }
 
+
+class NavBar extends Component {
+  render() {
+    return (
+      <React.Fragment>
+        <nav className="navbar navbar-expand-sm navbar-custom">
+            <a href="/" className="navbar-brand">COVID Central</a>
+            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCustom">
+                <i className="fa fa-bars fa-lg py-1 text-white"></i>
+            </button>
+            <div className="navbar-collapse collapse" id="navbarCustom">
+                <ul className="navbar-nav">
+                    <li className="nav-item active">
+                        <a onClick={() => this.props.onClick("country")} className="nav-link" href="#">View by Country</a>
+                    </li>
+                    <li className="nav-item">
+                        <a onClick={() => this.props.onClick("state")} className="nav-link" href="#">View by US States</a>
+                    </li>
+                    <li className="nav-item">
+                        <a className="nav-link" href="#">Trends</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+      </React.Fragment>
+    );
+  }
+}
 
 const GlobalCovid = (props) => {
   const {data} = props;

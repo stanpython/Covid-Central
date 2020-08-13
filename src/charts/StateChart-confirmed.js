@@ -8,6 +8,7 @@ import './CountryChart.css';
 class StateBarChartCases extends Component {
   plot(chart, width, height) {
     const { data } = this.props;
+    data.splice(2, 1);
     // create scales!
     const xScale = d3.scaleBand()
       .domain(data.map((d) => d.state))
@@ -16,6 +17,7 @@ class StateBarChartCases extends Component {
       .domain([0, d3.max(data, (d) => d.positive)])
       .range([height, 0]);
     const colorScale = d3.scaleOrdinal(d3.schemeTableau10);
+    const tooltip = d3.select('body').append('div').attr('class', 'toolTip');
 
     const u = chart.selectAll('.bar')
       .data(data);
@@ -28,6 +30,14 @@ class StateBarChartCases extends Component {
       .attr('y', (d) => yScale(d.positive))
       .attr('height', (d) => (height - yScale(d.positive)))
       .attr('width', (d) => xScale.bandwidth())
+      .on('mouseover', (d) => {
+        tooltip
+          .style('left', `${d3.event.pageX - 70}px`)
+          .style('top', `${d3.event.pageY - 90}px`)
+          .style('display', 'inline-block')
+          .html(`${d.state}<br>` + `Cases: +${d.positiveIncrease}<br>` + `Deaths: +${d.deathIncrease}<br>` + `Last Updated: ${d.lastUpdateEt.slice(0, 9)}`);
+      })
+      .on('mouseout', (d) => { tooltip.style('display', 'none'); })
 
       // .attr("fill", "#69b3a2")
       .style('fill', (d, i) => colorScale(i));
@@ -70,7 +80,7 @@ class StateBarChartCases extends Component {
       .attr('fill', '#000')
       .style('font-size', '20px')
       .style('text-anchor', 'middle')
-      .text('Countries');
+      .text('States');
 
     chart.append('g')
       .append('text')
@@ -79,7 +89,7 @@ class StateBarChartCases extends Component {
       .style('text-anchor', 'start')
       .style('font-size', '22px')
       .style('text-decoration', 'underline')
-      .text('Total Active Cases by State');
+      .text('Total Active Cases by States');
 
     // const yGridlines = d3.axisLeft()
     //   .scale(yScale)
