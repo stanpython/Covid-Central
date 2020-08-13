@@ -82,8 +82,8 @@ class BarChart extends Component {
 
     chart.append('g')
       .append('text')
-      .attr('x', (width / 2.5))
-      .attr('y', 0 - (60 / 3))
+      .attr('x', (width / 2.7))
+      .attr('y', 0 - (60 / 2))
       .style('text-anchor', 'start')
       .style('font-size', '22px')
       .style('text-decoration', 'underline')
