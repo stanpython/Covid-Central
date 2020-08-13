@@ -78,7 +78,8 @@ p {
 /* change the brand and text color */
 .navbar-custom .navbar-brand,
 .navbar-custom .navbar-text {
-  color: rgb(240, 240, 240);
+  color: rgb(181, 193, 193);
+  font-size: 24px;
 }
 
 /* change the link color */
