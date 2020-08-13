@@ -9,6 +9,7 @@ import StateChartDeaths from './charts/StateChart-deaths';
 import StateChartRecovered from './charts/StateChart-recovered';
 import "core-js/stable";
 import "regenerator-runtime/runtime";
+import LineChart from './LineChart'
 
 
 let start = 1;
@@ -93,8 +94,10 @@ class App extends Component {
   changeView(view) {
     if (view === "state") { 
       this.setState({view: 'state'})
-    } else {
+    } else if (view === "country") {
       this.setState({view: 'country'})
+    } else {
+      this.setState({view: 'trends'})
     }
   }
 
@@ -146,6 +149,24 @@ class App extends Component {
         </>
       )
       }
+      if (this.state.view === 'trends') {
+        return (
+          <>
+          <NavBar onClick={this.changeView.bind(this)}/>
+          <div className="chart-and-buttons">
+            <div className="chart-button-div">
+              <a onClick={() => this.topButtons("cases")} className="myButton">Confirmed Cases</a>
+              <a onClick={() => this.topButtons("deaths")} className="myButton">Deaths</a>
+              <a onClick={() => this.topButtons("recovered")} className="myButton">Recovered</a>
+            </div>
+            < div className="outer-container" >
+              <GlobalCovid data={this.state.global}/>
+              <LineChart/>
+            </div>
+          </div>
+          </>
+        )
+      }
   }
 
 }
@@ -169,7 +190,7 @@ class NavBar extends Component {
                         <a onClick={() => this.props.onClick("state")} className="nav-link" href="#">View by US States</a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="#">Trends</a>
+                        <a onClick={() => this.props.onClick("trends")} className="nav-link" href="#">Trends</a>
                     </li>
                 </ul>
             </div>
