@@ -1,23 +1,70 @@
-.App {
-    text-align: center;
-  }
+.outer-container {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.chart-and-buttons {
+  margin-top: 100px;
+}
+
+.chart-button-div {
+  display: flex;
+  justify-content: center;
+  margin-left: 140px;
+}
+
+.global-outer {
+  margin-top: 10px;
+}
+
+.global-container {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  width: 175px;
+  height: 175px;
   
-  .App-logo {
-    height: 40vmin;
-  }
-  
-  .App-header {
-    background-color: #282c34;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
-  }
-  
-  .App-link {
-    color: #09d3ac;
-  }
-  
+  /* margin-top: 10px; */
+  margin-right: 25px;
+  border: 1px solid rgb(194, 194, 194);
+  font-weight: bold;
+  color:black;
+  background-color: rgba(0,0,0,.03);
+}
+
+p {
+  margin: auto;
+}
+
+.today {
+  color: red;
+}
+
+.buttons-div {
+  margin-left: 250px;
+}
+
+.myButton {
+	box-shadow:inset 0px 1px 0px 0px #ffffff;
+	background:linear-gradient(to bottom, #ededed 5%, #dfdfdf 100%);
+	background-color:#ededed;
+	border-radius:6px;
+	border:1px solid #dcdcdc;
+	display:inline-block;
+	cursor:pointer;
+	color:#777777;
+	font-family:Arial;
+	font-size:15px;
+	font-weight:bold;
+	padding:6px 24px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #ffffff;
+}
+.myButton:hover {
+	background:linear-gradient(to bottom, #dfdfdf 5%, #ededed 100%);
+	background-color:#dfdfdf;
+}
+.myButton:active {
+	position:relative;
+	top:1px;
+}

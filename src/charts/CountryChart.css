@@ -1,0 +1,29 @@
+  #chart {
+    background-color: 	rgba(0,0,0,.03);
+    border: 1px solid #CCC;
+    margin-top: 20px;
+  }
+  
+  .bar {
+  shape-rendering: crispEdges;
+  }
+  
+  .bar-label{
+    fill: #000;
+  text-anchor: middle;
+  font-size: 18px;
+  }
+  
+  .axis path,
+  .axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+  }
+  
+  .gridline path,
+  .gridline line{
+  fill: none;
+  stroke: #ccc;
+  shape-rendering: crispEdges;
+  }
