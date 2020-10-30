@@ -1,18 +1,18 @@
-
-
 .outer-container {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
 }
 
 .chart-and-buttons {
-  margin-top: 50px;
+  /* margin-top: 50px; */
+  margin: 60px auto;
 }
 
 .chart-button-div {
   display: flex;
   justify-content: center;
-  margin-left: 140px;
+  /* margin-left: 140px;*/
+  align-items: center;
 }
 
 .global-outer {
@@ -25,13 +25,13 @@
   text-align: center;
   width: 175px;
   height: 175px;
-  
+
   /* margin-top: 10px; */
   margin-right: 25px;
   border: 1px solid rgb(194, 194, 194);
   font-weight: bold;
-  color:rgb(77, 77, 77);
-  background-color: rgba(0,0,0,.03);
+  color: rgb(77, 77, 77);
+  background-color: rgba(0, 0, 0, 0.03);
 }
 
 p {
@@ -43,32 +43,34 @@ p {
 }
 
 .buttons-div {
-  margin-left: 250px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .myButton {
-	box-shadow:inset 0px 1px 0px 0px #ffffff;
-	background:linear-gradient(to bottom, #ededed 5%, #dfdfdf 100%);
-	background-color:#ededed;
-	border-radius:6px;
-	border:1px solid #dcdcdc;
-	display:inline-block;
-	cursor:pointer;
-	color:#777777;
-	font-family:Arial;
-	font-size:15px;
-	font-weight:bold;
-	padding:6px 24px;
-	text-decoration:none;
-	text-shadow:0px 1px 0px #ffffff;
+  box-shadow: inset 0px 1px 0px 0px #ffffff;
+  background: linear-gradient(to bottom, #ededed 5%, #dfdfdf 100%);
+  background-color: #ededed;
+  border-radius: 6px;
+  border: 1px solid #dcdcdc;
+  display: inline-block;
+  cursor: pointer;
+  color: #777777;
+  font-family: Arial;
+  font-size: 15px;
+  font-weight: bold;
+  padding: 6px 24px;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px #ffffff;
 }
 .myButton:hover {
-	background:linear-gradient(to bottom, #dfdfdf 5%, #ededed 100%);
-	background-color:#dfdfdf;
+  background: linear-gradient(to bottom, #dfdfdf 5%, #ededed 100%);
+  background-color: #dfdfdf;
 }
 .myButton:active {
-	position:relative;
-	top:1px;
+  position: relative;
+  top: 1px;
 }
 
 .navbar-custom {
@@ -111,8 +113,3 @@ p {
 .lineChartSvg {
   width: 1200;
 }
-
-
-
-
-

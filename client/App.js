@@ -10,6 +10,7 @@ import StateChartRecovered from './charts/StateChart-recovered';
 import "core-js/stable";
 import "regenerator-runtime/runtime";
 import LineChart from './LineChart'
+import CovidTable from './charts/CovidTable.jsx'
 
 
 let start = 1;
@@ -58,12 +59,13 @@ class App extends Component {
       const allCountriesJson = await allCountries.json();
       return this.setState({data: allCountriesJson.slice(start -= 10, last -= 10)})
     }
-    if (direction === 2) {
+    if (direction === 2 && last <= 211 && start >= 0) {
       const allCountries = await fetch('https://coronavirus-19-api.herokuapp.com/countries')
       const allCountriesJson = await allCountries.json();
+      
       return this.setState({data: allCountriesJson.slice(start += 10, last += 10)})
     }
-    console.log(start, last);
+    // console.log(start, last);
   }
 
   async updateSliceState(direction) {
@@ -76,6 +78,7 @@ class App extends Component {
     if (direction === 2 && stateLast !== 61) {
       const allStates = await fetch('https://api.covidtracking.com/v1/states/current.json')
       const allStatesJson = await allStates.json();
+      console.log(stateLast)
       this.setState({USstates: allStatesJson.slice(stateStart += 10, stateLast += 10)})
     }
     // console.log(stateStart, stateLast, "clicked", this.state.USstates);
@@ -108,7 +111,8 @@ class App extends Component {
     if (this.state.view === 'country') {
     return (
       <>
-        <NavBar onClick={this.changeView.bind(this)}/>
+        <CovidTable />
+        {/* <NavBar onClick={this.changeView.bind(this)}/>
         <div className="chart-and-buttons">
           <div className="chart-button-div">
             <a onClick={() => this.topButtons("cases")} className="myButton">Confirmed Cases</a>
@@ -119,18 +123,19 @@ class App extends Component {
             <GlobalCovid data={this.state.global}/>
             {container[this.state.index]}
           </div>
-        </div>
-        <div className="buttons-div">
-          <a onClick={() => this.updateSliceCountry(1)} className="myButton">Last 10</a>
-          <a onClick={() => this.updateSliceCountry(2)} className="myButton">Next 10</a>
-        </div>
+          <div className="buttons-div">
+          <a onClick={() => this.updateSliceCountry(1)} className="myButton">Show Previous 10</a>
+          <a onClick={() => this.updateSliceCountry(2)} className="myButton" style={{marginLeft: "5px"}}>Show Next 10</a>
+          </div>
+        </div> */}
+
       </>
     )
     }
     if (this.state.view === 'state') {
       return (
         <>
-          <NavBar onClick={this.changeView.bind(this)}/>
+          {/* <NavBar onClick={this.changeView.bind(this)}/>
           <div className="chart-and-buttons">
             <div className="chart-button-div">
               <a onClick={() => this.topButtons("cases")} className="myButton">Confirmed Cases</a>
@@ -145,14 +150,14 @@ class App extends Component {
           <div className="buttons-div">
             <a onClick={() => this.updateSliceState(1)} className="myButton">Last 10</a>
             <a onClick={() => this.updateSliceState(2)} className="myButton">Next 10</a>
-          </div>
+          </div> */}
         </>
       )
       }
       if (this.state.view === 'trends') {
         return (
           <>
-          <NavBar onClick={this.changeView.bind(this)}/>
+          {/* <NavBar onClick={this.changeView.bind(this)}/>
           <div className="chart-and-buttons">
             <div className="chart-button-div">
               <a onClick={() => this.topButtons("cases")} className="myButton">Confirmed Cases</a>
@@ -163,7 +168,7 @@ class App extends Component {
               <GlobalCovid data={this.state.global}/>
               <LineChart/>
             </div>
-          </div>
+          </div> */}
           </>
         )
       }
