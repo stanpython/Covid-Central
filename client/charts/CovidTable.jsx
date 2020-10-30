@@ -62,6 +62,7 @@ const useStyles = makeStyles({
   root: {
     width: '80%',
     margin: 'auto'
+    
   },
   container: {
     maxHeight: 440,
@@ -72,6 +73,8 @@ export default function StickyHeadTable() {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+
+  
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
