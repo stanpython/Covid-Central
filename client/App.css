@@ -113,3 +113,7 @@ p {
 .lineChartSvg {
   width: 1200;
 }
+
+.MuiTableCell-stickyHeader {
+  background-color: black;
+}

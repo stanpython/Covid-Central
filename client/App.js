@@ -11,6 +11,7 @@ import "core-js/stable";
 import "regenerator-runtime/runtime";
 import LineChart from './LineChart'
 import CovidTable from './charts/CovidTable.jsx'
+import CovidTableState from './charts/CovidTableState.jsx'
 
 
 let start = 1;
@@ -28,6 +29,7 @@ class App extends Component {
       data: [],
       global: [],
       index: 0,
+      chartIdx: 0,
       USstates: [],
       view: "country",
     };
@@ -94,25 +96,33 @@ class App extends Component {
     }
   }
 
+  covidChart(buttonName) {
+    if (buttonName === "state") { 
+      this.setState({chartIdx: 1})
+    } else if (buttonName === "country") {
+      this.setState({chartIdx: 0})
+    }
+  }
+
   changeView(view) {
     if (view === "state") { 
       this.setState({view: 'state'})
     } else if (view === "country") {
       this.setState({view: 'country'})
     } else {
-      this.setState({view: 'trends'})
+      this.setState({view: 'chart'})
     }
   }
 
 
   render() {
-    let container = [<CountryChartConfirmed data={this.state.data}/>, <CountryChartDeaths data={this.state.data}/>, <CountryChartRecovered data={this.state.data}/>]
-    let state = [<StateChartCases data={this.state.USstates}/>, <StateChartDeaths data={this.state.USstates}/>, <StateChartRecovered data={this.state.USstates}/>]
+    const container = [<CountryChartConfirmed data={this.state.data}/>, <CountryChartDeaths data={this.state.data}/>, <CountryChartRecovered data={this.state.data}/>]
+    const state = [<StateChartCases data={this.state.USstates}/>, <StateChartDeaths data={this.state.USstates}/>, <StateChartRecovered data={this.state.USstates}/>]
+    const chart = [<CovidTable />, <CovidTableState />]
     if (this.state.view === 'country') {
     return (
       <>
-        <CovidTable />
-        {/* <NavBar onClick={this.changeView.bind(this)}/>
+        <NavBar onClick={this.changeView.bind(this)}/>
         <div className="chart-and-buttons">
           <div className="chart-button-div">
             <a onClick={() => this.topButtons("cases")} className="myButton">Confirmed Cases</a>
@@ -127,7 +137,7 @@ class App extends Component {
           <a onClick={() => this.updateSliceCountry(1)} className="myButton">Show Previous 10</a>
           <a onClick={() => this.updateSliceCountry(2)} className="myButton" style={{marginLeft: "5px"}}>Show Next 10</a>
           </div>
-        </div> */}
+        </div>
 
       </>
     )
@@ -135,7 +145,7 @@ class App extends Component {
     if (this.state.view === 'state') {
       return (
         <>
-          {/* <NavBar onClick={this.changeView.bind(this)}/>
+          <NavBar onClick={this.changeView.bind(this)}/>
           <div className="chart-and-buttons">
             <div className="chart-button-div">
               <a onClick={() => this.topButtons("cases")} className="myButton">Confirmed Cases</a>
@@ -150,25 +160,25 @@ class App extends Component {
           <div className="buttons-div">
             <a onClick={() => this.updateSliceState(1)} className="myButton">Last 10</a>
             <a onClick={() => this.updateSliceState(2)} className="myButton">Next 10</a>
-          </div> */}
+          </div>
         </>
       )
       }
-      if (this.state.view === 'trends') {
+      if (this.state.view === 'chart') {
         return (
           <>
-          {/* <NavBar onClick={this.changeView.bind(this)}/>
+          <NavBar onClick={this.changeView.bind(this)}/>
           <div className="chart-and-buttons">
             <div className="chart-button-div">
-              <a onClick={() => this.topButtons("cases")} className="myButton">Confirmed Cases</a>
-              <a onClick={() => this.topButtons("deaths")} className="myButton">Deaths</a>
-              <a onClick={() => this.topButtons("recovered")} className="myButton">Recovered</a>
+              <a onClick={() => this.covidChart("country")} className="myButton">View by Country</a>
+              <a onClick={() => this.covidChart("state")} className="myButton">View by State</a>
             </div>
             < div className="outer-container" >
               <GlobalCovid data={this.state.global}/>
-              <LineChart/>
+              {chart[this.state.chartIdx]}
+              {/* <CovidTableState /> */}
             </div>
-          </div> */}
+          </div>
           </>
         )
       }
@@ -195,7 +205,7 @@ class NavBar extends Component {
                         <a onClick={() => this.props.onClick("state")} className="nav-link" href="#">View by US States</a>
                     </li>
                     <li className="nav-item">
-                        <a onClick={() => this.props.onClick("trends")} className="nav-link" href="#">Trends</a>
+                        <a onClick={() => this.props.onClick("chart")} className="nav-link" href="#">View Data Table</a>
                     </li>
                 </ul>
             </div>

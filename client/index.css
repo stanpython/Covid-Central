@@ -4,6 +4,7 @@ body {
   font-family: "Noto Sans JP", sans-serif;
   /* font-weight: bold; */
   background-color: #f8f8ff;
+  overflow: hidden;
 }
 
 head {

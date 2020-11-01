@@ -10,7 +10,7 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 
 const columns = [
-  { id: 'country', label: 'Country', minWidth: 170 },
+  { id: 'state', label: 'State', minWidth: 170 },
   {
     id: 'cases',
     label: 'Total Cases',
@@ -27,14 +27,21 @@ const columns = [
   },
   {
     id: 'deaths',
-    label: 'Deaths',
+    label: 'Deaths (Cumulative)',
     minWidth: 170,
     align: 'right',
     format: (value) => value.toLocaleString('en-US'),
   },
   {
-    id: 'active',
-    label: 'Active Cases',
+    id: 'deathIncrease',
+    label: 'Daily Death Increase',
+    minWidth: 170,
+    align: 'right',
+    format: (value) => value.toLocaleString('en-US'),
+  },
+  {
+    id: 'hospitalized',
+    label: 'Hospitalized Currently',
     minWidth: 170,
     align: 'right',
     format: (value) => value.toLocaleString('en-US'),
@@ -48,8 +55,8 @@ const columns = [
   },
 ];
 
-function createData(country, cases, todayCases, deaths, active, recovered) {
-    return { country, cases, todayCases, deaths, active, recovered };
+function createData(state, cases, todayCases, deaths, deathIncrease, hospitalized, recovered) {
+    return { state, cases, todayCases, deaths, deathIncrease, hospitalized, recovered };
 }
 
 
@@ -69,8 +76,6 @@ const useStyles = makeStyles({
   },
 });
 
-// const rows = [];
-
 export default function StickyHeadTable(props) {
   const { data } = props
   const [rows, setRows] = React.useState([])
@@ -79,11 +84,12 @@ export default function StickyHeadTable(props) {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
   const injectRows = async () => {
-    const allCountries = await fetch('https://coronavirus-19-api.herokuapp.com/countries')
-    const allCountriesJson = await allCountries.json();
+    const allStates = await fetch('https://api.covidtracking.com/v1/states/current.json')
+    const allStatesJson = await allStates.json();
+    console.log(allStatesJson)
     const result = [];
-    allCountriesJson.forEach(country => {
-        result.push(createData(country.country, country.cases, country.todayCases, country.deaths, country.active, country.recovered))
+    allStatesJson.forEach(states => {
+        result.push(createData(states.state, states.positive, states.positiveIncrease, states.death, states.deathIncrease, states.hospitalizedCurrently, states.recovered))
     })
     // console.log(result);
     setRows(result)
