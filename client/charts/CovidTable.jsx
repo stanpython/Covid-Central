@@ -85,7 +85,6 @@ export default function StickyHeadTable(props) {
     allCountriesJson.forEach(country => {
         result.push(createData(country.country, country.cases, country.todayCases, country.deaths, country.active, country.recovered))
     })
-    // console.log(result);
     setRows(result)
   }
 

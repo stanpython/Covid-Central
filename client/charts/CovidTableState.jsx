@@ -86,12 +86,10 @@ export default function StickyHeadTable(props) {
   const injectRows = async () => {
     const allStates = await fetch('https://api.covidtracking.com/v1/states/current.json')
     const allStatesJson = await allStates.json();
-    console.log(allStatesJson)
     const result = [];
     allStatesJson.forEach(states => {
         result.push(createData(states.state, states.positive, states.positiveIncrease, states.death, states.deathIncrease, states.hospitalizedCurrently, states.recovered))
     })
-    // console.log(result);
     setRows(result)
   }
 
